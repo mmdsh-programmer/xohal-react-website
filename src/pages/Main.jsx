@@ -87,52 +87,26 @@ export default function Main(props) {
         <Grid container className={classes.container} spacing={2}>
           <Grid item xs={12} md={6} className={classes.dFlex}>
             <Link
-              to="/categories/179/X MEMO | دفترچه"
+              to="/categories/188/باکس فلزی"
               className={classes.link}
               onClick={() => emptyFilter()}
             >
               <Avatar
                 alt="logo"
-                src={process.env.PUBLIC_URL + "/xmemo.jpg"}
+                src="https://xohal.com/wp-content/uploads/2021/01/photo_2021-03-30_08-33-29.jpg"
                 className={classes.square}
               />
             </Link>
           </Grid>
           <Grid item xs={12} md={6} className={classes.dFlex}>
             <Link
-              to="/categories/168/X WRAP | کادوپیچ"
+              to="/categories/198/تذهیب "
               className={classes.link}
               onClick={() => emptyFilter()}
             >
               <Avatar
                 alt="logo"
-                src={process.env.PUBLIC_URL + "/xwrap.jpg"}
-                className={classes.square}
-              />
-            </Link>
-          </Grid>
-          <Grid item xs={12} md={6} className={classes.dFlex}>
-            <Link
-              to="/categories/171/X BAG | بگ"
-              className={classes.link}
-              onClick={() => emptyFilter()}
-            >
-              <Avatar
-                alt="logo"
-                src={process.env.PUBLIC_URL + "/xbag.jpg"}
-                className={classes.square}
-              />
-            </Link>
-          </Grid>
-          <Grid item xs={12} md={6} className={classes.dFlex}>
-            <Link
-              to="/categories/211/X BOX | متال باکس"
-              className={classes.link}
-              onClick={() => emptyFilter()}
-            >
-              <Avatar
-                alt="logo"
-                src={process.env.PUBLIC_URL + "/xbox.jpg"}
+                src="https://xohal.com/wp-content/uploads/2021/05/2041003309.jpg"
                 className={classes.square}
               />
             </Link>
