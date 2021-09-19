@@ -75,12 +75,6 @@ export default function Main(props) {
     });
   };
 
-  React.useEffect(() => {
-    category.read("/wc/v3/products/categories").then((res) => {
-      console.log(res.data);
-    });
-  }, []);
-
   return (
     <React.Fragment>
       <Container maxWidth="xl">

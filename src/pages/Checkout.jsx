@@ -31,6 +31,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import order from "services/crud/order";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import { useAuthState } from "./../helpers/Auth";
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -123,6 +124,7 @@ const steps = ["مشخصات شما"];
 
 export default function Checkout() {
   const classes = useStyles();
+  const user = useAuthState();
   useDocumentTitle("ثبت سفارش");
   const {
     register,
@@ -171,7 +173,7 @@ export default function Checkout() {
     setOutOfStockProducts([]);
     let products = [];
     product
-      .read(`/wc/v3/products?per_page=2000`)
+      .read(`/wc/v3/products?per_page=2000`, user.token)
       .then(({ data }) => {
         let notAvailableProducts = [];
         cartItems.map((item) => {
@@ -198,7 +200,10 @@ export default function Checkout() {
   };
 
   const sendData = (data, products) => {
+    const { userDetails } = user;
+    console.log(userDetails.user_id);
     const finalData = {
+      customer_id: Number(userDetails.user_id),
       payment_method: "درگاه بانکی",
       payment_method_title: "انتقال مستقیم بانکی",
       set_paid: true,
@@ -231,7 +236,7 @@ export default function Checkout() {
     };
     console.log(outOfStockProducts.length);
     order
-      .create(finalData, "/wc/v3/orders?status=processing")
+      .create(finalData, "/wc/v3/orders?status=processing", user.token)
       .then((res) => {
         handleMessageOpen();
         handleCheckout();

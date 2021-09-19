@@ -1,11 +1,11 @@
 import axios from "axios";
-const baseURL = "https://xohal.com/wp-json";
+const baseURL = "https://tazhib.ir/wp-json";
 let config = {
     method: "get",
-    url: "https://xohal.com/wp-json/wc/v3/coupons",
+    url: "https://tazhib.ir/wp-json/wc/v3/coupons",
     headers: {
         Authorization:
-            "Basic Y2tfNTFmZGQwY2Q4YzY2ZDc3NmYzMTg1Y2Y4MDExMDQ1MDZhM2UzOTFiYTpjc180MWJlMWRmNmNhY2Q5NTViMDg3ZTAwZTgwMjRlZjZlZjRjYWRkNTRk",
+            "Basic Y2tfM2ViOThkNWY1Yjk3ODQ4OWVhZTY5YzIzOWNjYWNiOGJmMjcxMzFiMjpjc19jMzBkNGE4NzM1MTE2MTYwODdjMTQ5NGMzMDQyZTU5MTc2M2YyYTg0",
     },
 };
 

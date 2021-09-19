@@ -12,15 +12,16 @@ import Signup from "pages/Signup";
 import NotFound from "pages/NotFound";
 import Categories from "pages/Categories";
 import Cart from "pages/Cart";
-import AuthContextProvider from "helpers/AuthContext";
 import CartContextProvider from "helpers/CartContext";
 import FilterContextProvider from "helpers/FilterContext";
+import { PrivateRoute } from "./PrivateRoute";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "../styles/App.css";
 import Checkout from "pages/Checkout";
 import SizeGuide from "pages/SizeGuide";
 import Header from "./Header";
 import BackToTop from "./BackToTop";
+import { AuthProvider } from "helpers/Auth";
 
 const shabnam = {
   fontFamily: "Shabnam",
@@ -51,7 +52,7 @@ export default function App(props) {
     <ThemeProvider theme={theme}>
       <RTL>
         <CssBaseline />
-        <AuthContextProvider>
+        <AuthProvider>
           <FilterContextProvider>
             <CartContextProvider>
               <Router>
@@ -59,18 +60,21 @@ export default function App(props) {
                 <Switch>
                   <Route exact path="/signin" component={Signin} />
                   <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/cart" component={Cart} />
-                  <Route exact path="/checkout" component={Checkout} />
+                  <PrivateRoute exact path="/cart" component={Cart} />
+                  <PrivateRoute exact path="/checkout" component={Checkout} />
                   <Route exact path="/size-guide" component={SizeGuide} />
                   <Route exact path="/" component={Main} />
-                  <Route path="/categories/:key/:slug" component={Categories} />
+                  <PrivateRoute
+                    path="/categories/:key/:slug"
+                    component={Categories}
+                  />
                   <Route component={() => <NotFound />} />
                 </Switch>
                 <BackToTop />
               </Router>
             </CartContextProvider>
           </FilterContextProvider>
-        </AuthContextProvider>
+        </AuthProvider>
         <ToastContainer bodyClassName="rtl" />
       </RTL>
     </ThemeProvider>

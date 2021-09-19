@@ -9,7 +9,7 @@ import Button from "components/Button";
 import { FilterContext } from "helpers/FilterContext";
 import FilterComponent from "components/FilterComponent";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import category from "services/crud/categories";
+import { useAuthDispatch, useAuthState } from "./../helpers/Auth";
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -83,7 +83,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Categories(props) {
   const classes = useStyles();
+  const userDetails = useAuthState();
   const { filter } = React.useContext(FilterContext);
+  const user = true;
   const [products, setProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [offset, setOffset] = React.useState(16);
@@ -243,7 +245,8 @@ export default function Categories(props) {
     console.log(filter);
     product
       .read(
-        `/wc/v3/products?category=${key}&orderby=date&stock_status=instock&status=publish&per_page=1000`
+        `/wc/v3/products?category=${key}&orderby=date&stock_status=instock&status=publish&per_page=1000`,
+        userDetails.token
       )
       .then((res) => {
         console.log(res.data);

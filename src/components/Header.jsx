@@ -9,7 +9,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
-import category from "services/crud/categories";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
 import Avatar from "@material-ui/core/Avatar";
@@ -22,6 +21,9 @@ import Button from "@material-ui/core/Button";
 import { FilterContext } from "helpers/FilterContext";
 import SearchIcon from "@material-ui/icons/Search";
 import Search from "./Search";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+import { useAuthDispatch, logout, useAuthState } from "./../helpers/Auth";
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -209,11 +211,17 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     transition: "visibility 0.5s, opacity 0.5s linear",
   },
+  mlAuto: {
+    marginLeft: "auto",
+  },
 }));
 
 export default function Header(props) {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useAuthDispatch();
+  const userDetails = useAuthState();
+  const user = true;
   const [state, setState] = React.useState({
     right: false,
   });
@@ -227,8 +235,6 @@ export default function Header(props) {
 
   const [openSearch, setOpenSearch] = React.useState(false);
   const { cartItems, itemCount, removeProduct } = React.useContext(CartContext);
-  const [branch, setBranch] = React.useState([]);
-  const [subBranch, setSubBranch] = React.useState([]);
   const navBarItems = ["باکس فلزی", "تذهیب"];
   const navBarItemsId = [188, 198];
 
@@ -278,27 +284,16 @@ export default function Header(props) {
   };
 
   React.useEffect(() => {
-    const filteredBranch = [];
-    const filteredSubBranch = [];
-    category
-      .read("/wc/v3/products/categories?per_page=100")
-      .then((res) => {
-        //console.log(res.data);
-        setCategories(res.data);
-        res.data.map((cat) => {
-          cat.parent === 0 && filteredBranch.push(cat);
-          cat.parent === 0 &&
-            filteredSubBranch.push(filterCategories(res.data, cat.id));
-        });
-        setBranch(filteredBranch);
-        setSubBranch(filteredSubBranch);
-        /*console.log("sub branch", filteredSubBranch);
-        console.log("branch", filteredBranch);*/
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  }, [history]);
+    user.token === localStorage.getItem("token")
+      ? setAuth(true)
+      : setAuth(false);
+  }, [localStorage.getItem("token")]);
+
+  React.useEffect(() => {
+    user.token === localStorage.getItem("token")
+      ? setAuth(true)
+      : setAuth(false);
+  }, []);
 
   return (
     <div className={classes.bottomMargin}>
@@ -323,37 +318,53 @@ export default function Header(props) {
               className={classes.square}
             />
           </Link>
-
-          <List component="nav" className={classes.flexNav}>
-            {navBarItems.map((item, index) => (
-              <React.Fragment key={index}>
-                <ListItem
-                  button
-                  key={index}
-                  className={[
-                    classes.navItem,
-                    { selected: classes.active },
-                  ].join(" ")}
-                  onClick={(e) => {
-                    emptyFilter();
-                    history.push(`/categories/${navBarItemsId[index]}/${item}`);
-                  }}
-                >
-                  <ListItemText
-                    className={classes.navItemText}
-                    primary={
-                      <Typography style={{ color: "white" }}>{item}</Typography>
-                    }
-                  />
-                </ListItem>
-              </React.Fragment>
-            ))}
-          </List>
+          {Boolean(userDetails.token) && (
+            <List component="nav" className={classes.flexNav}>
+              {navBarItems.map((item, index) => (
+                <React.Fragment key={index}>
+                  <ListItem
+                    button
+                    key={index}
+                    className={[
+                      classes.navItem,
+                      { selected: classes.active },
+                    ].join(" ")}
+                    onClick={(e) => {
+                      emptyFilter();
+                      history.push(
+                        `/categories/${navBarItemsId[index]}/${item}`
+                      );
+                    }}
+                  >
+                    <ListItemText
+                      className={classes.navItemText}
+                      primary={
+                        <Typography style={{ color: "white" }}>
+                          {item}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                </React.Fragment>
+              ))}
+            </List>
+          )}
 
           <Search open={openSearch} onClose={handleSearchClose} />
 
-          {auth && (
+          {Boolean(userDetails.token) && (
             <div className={classes.flex}>
+              <IconButton
+                color="inherit"
+                aria-label="logout"
+                onClick={() => {
+                  localStorage.setItem("token", "");
+                  history.push("/signin");
+                }}
+              >
+                <ExitToAppOutlinedIcon />
+              </IconButton>
+
               <IconButton
                 color="inherit"
                 aria-label="search"
@@ -372,6 +383,20 @@ export default function Header(props) {
                 </Badge>
               </IconButton>
             </div>
+          )}
+
+          {!Boolean(userDetails.token) && (
+            <IconButton
+              color="inherit"
+              aria-label="login"
+              onClick={() => {
+                logout(dispatch);
+                history.push("/signin");
+              }}
+              className={classes.mlAuto}
+            >
+              <AccountCircleOutlinedIcon />
+            </IconButton>
           )}
         </Toolbar>
       </AppBar>
