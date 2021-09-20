@@ -24,6 +24,7 @@ import Search from "./Search";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import { useAuthDispatch, logout, useAuthState } from "./../helpers/Auth";
+import useLocalStorageChange from "hooks/useLocalStorageChange";
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -221,14 +222,10 @@ export default function Header(props) {
   const history = useHistory();
   const dispatch = useAuthDispatch();
   const userDetails = useAuthState();
-  const user = true;
+  useLocalStorageChange();
   const [state, setState] = React.useState({
     right: false,
   });
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const [categories, setCategories] = React.useState([]);
   const [selectedIndex, setSelectedIndex] = React.useState();
 
   const { setFilter } = React.useContext(FilterContext);
@@ -262,10 +259,6 @@ export default function Header(props) {
     setState((prevState) => ({ ...prevState, mainMenuOpen: false }));
   };
 
-  const filterCategories = (array, id) => {
-    return array.filter((e) => e.parent === id);
-  };
-
   const handleSearchOpen = () => {
     setOpenSearch(!openSearch);
   };
@@ -282,18 +275,6 @@ export default function Header(props) {
       usage: [],
     });
   };
-
-  React.useEffect(() => {
-    user.token === localStorage.getItem("token")
-      ? setAuth(true)
-      : setAuth(false);
-  }, [localStorage.getItem("token")]);
-
-  React.useEffect(() => {
-    user.token === localStorage.getItem("token")
-      ? setAuth(true)
-      : setAuth(false);
-  }, []);
 
   return (
     <div className={classes.bottomMargin}>
