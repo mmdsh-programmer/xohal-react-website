@@ -81,26 +81,26 @@ export default function Main(props) {
         <Grid container className={classes.container} spacing={2}>
           <Grid item xs={12} md={6} className={classes.dFlex}>
             <Link
-              to="/categories/198/باکس فلزی"
+              to="/categories/188/باکس فلزی"
               className={classes.link}
               onClick={() => emptyFilter()}
             >
               <Avatar
                 alt="logo"
-                src="https://xohal.com/wp-content/uploads/2021/01/photo_2021-03-30_08-33-29.jpg"
+                src="https://admin.xohal.com/wp-content/uploads/2021/01/photo_2021-03-30_08-33-29.jpg"
                 className={classes.square}
               />
             </Link>
           </Grid>
           <Grid item xs={12} md={6} className={classes.dFlex}>
             <Link
-              to="/categories/188/تذهیب"
+              to="/categories/198/تذهیب"
               className={classes.link}
               onClick={() => emptyFilter()}
             >
               <Avatar
                 alt="logo"
-                src="https://xohal.com/wp-content/uploads/2021/05/2041003309.jpg"
+                src="https://admin.xohal.com/wp-content/uploads/2021/05/2041003309.jpg"
                 className={classes.square}
               />
             </Link>
