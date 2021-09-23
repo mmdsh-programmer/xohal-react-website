@@ -5,11 +5,11 @@ import product from "services/crud/products";
 import ProductCard from "components/ProductCard";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import Button from "components/Button";
 import { FilterContext } from "helpers/FilterContext";
 import FilterComponent from "components/FilterComponent";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import category from "services/crud/categories";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import handleViewport from "react-in-viewport";
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -79,6 +79,12 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "0",
     },
   },
+  viewPort: {
+    height: 120,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 
 export default function Categories(props) {
@@ -86,10 +92,21 @@ export default function Categories(props) {
   const { filter } = React.useContext(FilterContext);
   const [products, setProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [showMoreLoading, setShowMoreLoading] = React.useState(true);
   const [offset, setOffset] = React.useState(16);
   const { key } = props.match.params;
   const { slug } = props.match.params;
   useDocumentTitle(slug);
+
+  const Block = (props) => {
+    const { forwardedRef } = props;
+    return (
+      <div className={classes.viewPort} ref={forwardedRef}>
+        {showMoreLoading && <CircularProgress size={40} disableShrink />}
+      </div>
+    );
+  };
+  const ViewportBlock = handleViewport(Block);
 
   const handleGoToTop = () => {
     const anchor = document.querySelector("#back-to-top-anchor");
@@ -118,6 +135,14 @@ export default function Categories(props) {
       case "تذهیب":
         return categoryDescription.tazhib;
     }
+  };
+
+  const handleOffset = () => {
+    setShowMoreLoading(true);
+    setTimeout(() => {
+      setShowMoreLoading(false);
+      setOffset(offset + 16);
+    }, 1000);
   };
 
   const isNew = (date) => {
@@ -305,15 +330,7 @@ export default function Categories(props) {
           )}
         </Grid>
         {products.length > 0 && offset < products.length ? (
-          <Button
-            className={classes.loadMore}
-            variant="outlined"
-            onClick={() => {
-              setOffset(offset + 16);
-            }}
-          >
-            محصولات بیشتر
-          </Button>
+          <ViewportBlock onEnterViewport={handleOffset} />
         ) : (
           <div className={classes.gutter}></div>
         )}
