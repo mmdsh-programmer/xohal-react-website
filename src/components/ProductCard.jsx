@@ -102,9 +102,12 @@ const useStyles = makeStyles((theme) => ({
   modalImage: {
     height: 358,
     width: "auto",
-    [specialBreakpoint.breakpoints.down("sm")]: {
+    [specialBreakpoint.breakpoints.down("md")]: {
       height: 260,
     },
+  },
+  dialogPaper: {
+    minHeight: 588,
   },
 }));
 
@@ -170,6 +173,7 @@ export default function ProductCard(props) {
         open={open}
         onClose={handleCloseModal}
         aria-labelledby="form-dialog-title"
+        scroll="body"
       >
         <DialogTitle id="form-dialog-title">{props.title}</DialogTitle>
         <DialogContent>
@@ -181,21 +185,21 @@ export default function ProductCard(props) {
           />
           <Typography
             variant="body1"
-            component="h2"
+            component="h6"
+            align="right"
             className={classes.showPieces}
           >
             Package: {props.pieces} pcs
           </Typography>
           <Typography
             variant="body1"
-            component="h2"
+            component="h6"
             align="right"
             className={classes.code}
           >
             X Code: {props.sku}
           </Typography>
           <TextField
-            autoFocus
             variant="outlined"
             margin="dense"
             id="quantity"
@@ -275,7 +279,7 @@ export default function ProductCard(props) {
                     {props.new && <div className="new-label">New</div>}
                     <Typography
                       variant="body1"
-                      component="h2"
+                      component="h3"
                       align="right"
                       className={classes.middleLine}
                       noWrap
@@ -285,14 +289,14 @@ export default function ProductCard(props) {
                   </Box>
                   <Typography
                     variant="body1"
-                    component="h2"
+                    component="h4"
                     className={classes.showPieces}
                   >
                     Package: {props.pieces} pcs
                   </Typography>
                   <Typography
                     variant="body1"
-                    component="h2"
+                    component="h4"
                     align="right"
                     className={classes.code}
                   >
@@ -362,7 +366,7 @@ export default function ProductCard(props) {
                 {show && (
                   <Typography
                     variant="body1"
-                    component="h2"
+                    component="span"
                     className={[classes.pack, "animate__fadeInLeft"].join(" ")}
                   >
                     {isInCart(props)
