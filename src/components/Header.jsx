@@ -180,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   square: {
-    width: "140px",
+    width: 90,
     height: "auto",
     borderRadius: 0,
   },
