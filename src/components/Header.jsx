@@ -319,7 +319,7 @@ export default function Header(props) {
           <Link to="/" className={classes.link}>
             <Avatar
               alt="logo"
-              src={process.env.PUBLIC_URL + "/logo.png"}
+              src={process.env.PUBLIC_URL + "/xohal-logo.png"}
               className={classes.square}
             />
           </Link>
