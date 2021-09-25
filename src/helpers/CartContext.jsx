@@ -82,10 +82,6 @@ const CartContextProvider = ({ children }) => {
     dispatch({ type: "CHECKOUT" });
   };
 
-  const addCoupon = (coupon) => {
-    
-  };
-
   const contextValues = {
     removeProduct,
     addProduct,

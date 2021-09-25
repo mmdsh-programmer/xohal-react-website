@@ -15,7 +15,7 @@ export const CartReducer = (state, action) => {
             if (!state.cartItems.find(item => item.id === action.payload.id)) {
                 state.cartItems.push({
                     ...action.payload,
-                    quantity: 1
+                    quantity: action.payload.count
                 })
             }
 
@@ -31,7 +31,8 @@ export const CartReducer = (state, action) => {
                 cartItems: [...state.cartItems.filter(item => item.id !== action.payload.id)]
             }
         case "INCREASE":
-            state.cartItems[state.cartItems.findIndex(item => item.id === action.payload.id)].quantity++
+            state.cartItems[state.cartItems.findIndex(item => item.id === action.payload.id)].quantity = action.payload.count
+            state.cartItems[state.cartItems.findIndex(item => item.id === action.payload.id)].count = action.payload.count
             return {
                 ...state,
                 ...sumItems(state.cartItems),
