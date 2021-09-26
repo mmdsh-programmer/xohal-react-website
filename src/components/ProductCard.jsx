@@ -134,6 +134,7 @@ export default function ProductCard(props) {
 
   const handleShowPack = () => {
     const count = isInCart(props) ? selectedCartItem(props.id)[0].quantity : 0;
+    console.log(count);
     if (count + 1 == 1) {
       setShow(true);
       setTimeout(() => {
@@ -164,6 +165,7 @@ export default function ProductCard(props) {
       isInCart(props)
         ? increase({ ...props, count: count })
         : addProduct({ ...props, count: count });
+      console.log(props);
     }
   };
 

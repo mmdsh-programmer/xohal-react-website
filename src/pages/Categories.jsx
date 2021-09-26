@@ -10,6 +10,7 @@ import FilterComponent from "components/FilterComponent";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import handleViewport from "react-in-viewport";
+import { ProductContext } from "helpers/ProductsContext";
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -90,6 +91,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Categories(props) {
   const classes = useStyles();
   const { filter } = React.useContext(FilterContext);
+  const {
+    initialProducts,
+    filtering,
+    allProducts,
+    filteredProducts,
+  } = React.useContext(ProductContext);
   const [products, setProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [showMoreLoading, setShowMoreLoading] = React.useState(true);
@@ -134,6 +141,14 @@ export default function Categories(props) {
         return categoryDescription.box;
       case "تذهیب":
         return categoryDescription.tazhib;
+    }
+  };
+
+  const checkFilter = () => {
+    if (filter.materials.length > 0 || filter.sizes.length > 0) {
+      return filteredProducts;
+    } else {
+      return allProducts;
     }
   };
 
@@ -258,7 +273,7 @@ export default function Categories(props) {
 
     const finalFilter = filteredMaterials.concat(filteredSizes);
 
-    setProducts(count(finalFilter));
+    filtering({ filtered: count(finalFilter) });
   };
 
   React.useEffect(() => {
@@ -272,15 +287,21 @@ export default function Categories(props) {
       )
       .then((res) => {
         console.log(res.data);
-        filter.materials.length > 0 || filter.sizes.length > 0
-          ? filterProducts(res.data)
-          : setProducts(res.data);
+        initialProducts({ products: res.data });
         setLoading(false);
       })
       .catch((error) => {
         console.log(error.message);
       });
-  }, [key, filter]);
+  }, [key]);
+
+  React.useEffect(() => {
+    setOffset(16);
+    handleGoToTop();
+    console.log(filter);
+    if (filter.materials.length > 0 || filter.sizes.length > 0)
+      filterProducts(allProducts);
+  }, [filter]);
 
   const CategoriesComponent = () => {
     return (
@@ -288,37 +309,41 @@ export default function Categories(props) {
         <FilterComponent slug={slug} />
         <Grid
           container
-          className={products.length > 0 ? classes.container : classes.dFlex}
+          className={
+            checkFilter().length > 0 ? classes.container : classes.dFlex
+          }
           spacing={2}
         >
-          {products.length > 0 ? (
-            products.slice(0, offset).map((pr, index) => {
-              return (
-                <Grid
-                  item
-                  xs={12}
-                  sm={4}
-                  md={3}
-                  key={index}
-                  className={classes.dFlex}
-                >
-                  <ProductCard
-                    image={
-                      typeof pr.images[0] !== "undefined"
-                        ? pr.images[0].src
-                        : "https://merrix.com/wp-content/uploads/woocommerce-placeholder.png"
-                    }
-                    title={pr.name}
+          {checkFilter().length > 0 ? (
+            checkFilter()
+              .slice(0, offset)
+              .map((pr, index) => {
+                return (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                    md={3}
                     key={index}
-                    id={pr.id}
-                    sku={pr.sku}
-                    stock={pr.stock_quantity}
-                    new={isNew(pr.date_created)}
-                    pieces={checkSlug().pieces}
-                  />
-                </Grid>
-              );
-            })
+                    className={classes.dFlex}
+                  >
+                    <ProductCard
+                      image={
+                        typeof pr.images[0] !== "undefined"
+                          ? pr.images[0].src
+                          : "https://merrix.com/wp-content/uploads/woocommerce-placeholder.png"
+                      }
+                      title={pr.name}
+                      key={index}
+                      id={pr.id}
+                      sku={pr.sku}
+                      stock={pr.stock_quantity}
+                      new={isNew(pr.date_created)}
+                      pieces={checkSlug().pieces}
+                    />
+                  </Grid>
+                );
+              })
           ) : (
             <Typography
               variant="body1"
@@ -329,7 +354,7 @@ export default function Categories(props) {
             </Typography>
           )}
         </Grid>
-        {products.length > 0 && offset < products.length ? (
+        {checkFilter().length > 0 && offset < checkFilter().length ? (
           <ViewportBlock onEnterViewport={handleOffset} />
         ) : (
           <div className={classes.gutter}></div>

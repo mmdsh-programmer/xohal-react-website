@@ -15,6 +15,7 @@ import Cart from "pages/Cart";
 import AuthContextProvider from "helpers/AuthContext";
 import CartContextProvider from "helpers/CartContext";
 import FilterContextProvider from "helpers/FilterContext";
+import ProductContextProvider from "helpers/ProductsContext";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "../styles/App.css";
 import Checkout from "pages/Checkout";
@@ -53,22 +54,27 @@ export default function App(props) {
         <CssBaseline />
         <AuthContextProvider>
           <FilterContextProvider>
-            <CartContextProvider>
-              <Router>
-                <Header />
-                <Switch>
-                  <Route exact path="/signin" component={Signin} />
-                  <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/cart" component={Cart} />
-                  <Route exact path="/checkout" component={Checkout} />
-                  <Route exact path="/size-guide" component={SizeGuide} />
-                  <Route exact path="/" component={Main} />
-                  <Route path="/categories/:key/:slug" component={Categories} />
-                  <Route component={() => <NotFound />} />
-                </Switch>
-                <BackToTop />
-              </Router>
-            </CartContextProvider>
+            <ProductContextProvider>
+              <CartContextProvider>
+                <Router>
+                  <Header />
+                  <Switch>
+                    <Route exact path="/signin" component={Signin} />
+                    <Route exact path="/signup" component={Signup} />
+                    <Route exact path="/cart" component={Cart} />
+                    <Route exact path="/checkout" component={Checkout} />
+                    <Route exact path="/size-guide" component={SizeGuide} />
+                    <Route exact path="/" component={Main} />
+                    <Route
+                      path="/categories/:key/:slug"
+                      component={Categories}
+                    />
+                    <Route component={() => <NotFound />} />
+                  </Switch>
+                  <BackToTop />
+                </Router>
+              </CartContextProvider>
+            </ProductContextProvider>
           </FilterContextProvider>
         </AuthContextProvider>
         <ToastContainer bodyClassName="rtl" />
