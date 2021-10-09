@@ -19,6 +19,10 @@ const CartContextProvider = ({ children }) => {
     dispatch({ type: "INCREASE", payload });
   };
 
+  const increaseAmount = (payload) => {
+    dispatch({ type: "INCREASE_AMOUNT", payload });
+  };
+
   const decrease = (payload) => {
     dispatch({ type: "DECREASE", payload });
   };
@@ -44,6 +48,7 @@ const CartContextProvider = ({ children }) => {
     removeProduct,
     addProduct,
     increase,
+    increaseAmount,
     decrease,
     clearCart,
     handleCheckout,

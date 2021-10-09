@@ -109,6 +109,13 @@ const useStyles = makeStyles((theme) => ({
   dialogPaper: {
     minHeight: 588,
   },
+  new: {
+    width: 30,
+    height: "auto",
+    objectFit: "contain",
+    borderRadius: 0,
+    marginLeft: 5,
+  },
 }));
 
 export default function ProductCard(props) {
@@ -117,7 +124,7 @@ export default function ProductCard(props) {
   const [open, setOpen] = React.useState(false);
   const {
     cartItems,
-    increase,
+    increaseAmount,
     addProduct,
     decrease,
     removeProduct,
@@ -163,7 +170,7 @@ export default function ProductCard(props) {
     if (count > 0) {
       handleShowPack();
       isInCart(props)
-        ? increase({ ...props, count: count })
+        ? increaseAmount({ ...props, count: count })
         : addProduct({ ...props, count: count });
       console.log(props);
     }
@@ -274,11 +281,22 @@ export default function ProductCard(props) {
                     display="flex"
                     textOverflow="ellipsis"
                     flexDirection="row-reverse"
-                    alignItems="center"
+                    alignItems="baseline"
                     overflow="hidden"
                     className={classes.customBox}
                   >
-                    {props.new && <div className="new-label">New</div>}
+                    {props.new && (
+                      <Avatar
+                        alt="new"
+                        src={process.env.PUBLIC_URL + "/new.png"}
+                        className={classes.new}
+                        imgProps={{
+                          style: {
+                            objectFit: "contain",
+                          },
+                        }}
+                      />
+                    )}
                     <Typography
                       variant="body1"
                       component="h3"
