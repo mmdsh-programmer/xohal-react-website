@@ -233,7 +233,7 @@ export default function FilterComponent(props) {
 
   const checkSlug = () => {
     switch (slug) {
-      case "باکس فلزی":
+      case "باکس":
         return filterOptions.box;
       case "تذهیب":
         return filterOptions.tazhib;

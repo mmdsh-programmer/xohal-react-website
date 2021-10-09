@@ -81,7 +81,7 @@ export default function Main(props) {
         <Grid container className={classes.container} spacing={2}>
           <Grid item xs={12} md={6} className={classes.dFlex}>
             <Link
-              to="/categories/188/باکس فلزی"
+              to="/categories/188/باکس"
               className={classes.link}
               onClick={() => emptyFilter()}
             >

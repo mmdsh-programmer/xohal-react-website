@@ -137,7 +137,7 @@ export default function Categories(props) {
 
   const checkSlug = () => {
     switch (slug) {
-      case "باکس فلزی":
+      case "باکس":
         return categoryDescription.box;
       case "تذهیب":
         return categoryDescription.tazhib;

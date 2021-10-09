@@ -229,7 +229,7 @@ export default function Header(props) {
   const { cartItems, itemCount, removeProduct } = React.useContext(CartContext);
   const [branch, setBranch] = React.useState([]);
   const [subBranch, setSubBranch] = React.useState([]);
-  const navBarItems = ["باکس فلزی", "تذهیب"];
+  const navBarItems = ["باکس", "تذهیب"];
   const navBarItemsId = [188, 198];
 
   const handleListItemClick = (event, index) => {
