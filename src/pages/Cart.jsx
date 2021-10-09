@@ -136,6 +136,7 @@ export default function Cart(props) {
                           }}
                           badgeContent={row.quantity}
                           color="secondary"
+                          max={1000}
                         >
                           <Avatar
                             alt={row.title}

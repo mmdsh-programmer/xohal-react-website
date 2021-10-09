@@ -172,7 +172,6 @@ export default function ProductCard(props) {
       isInCart(props)
         ? increaseAmount({ ...props, count: count })
         : addProduct({ ...props, count: count });
-      console.log(props);
     }
   };
 
