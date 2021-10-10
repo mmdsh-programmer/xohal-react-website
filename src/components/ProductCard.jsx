@@ -11,8 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import Grid from "@material-ui/core/Grid";
 import { CartContext } from "helpers/CartContext";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -22,6 +21,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -42,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fcfcfc",
   },
   button: {
-    minWidth: "25px",
-    padding: "1px 1px",
+    border: "1px solid #b3b3b3",
+    borderRadius : 5
   },
   borderlessButton: {
     border: "none",
@@ -318,7 +319,7 @@ export default function ProductCard(props) {
                     component="h4"
                     className={classes.showPieces}
                   >
-                    {props.pieces} in 1
+                    Package : {props.pieces} in 1
                   </Typography>
                   <Typography
                     variant="body1"
@@ -333,75 +334,24 @@ export default function ProductCard(props) {
             </Grid>
             {!props.loading && (
               <Grid item xs={2} className={classes.buttonContainer}>
-                <ButtonGroup orientation="vertical">
-                  {isInCart(props) && (
-                    <Button
-                      aria-label="reduce"
-                      size="small"
-                      variant="outlined"
-                      color="secondary"
-                      className={[
-                        classes.button,
-                        classes.coloredBorderButton,
-                      ].join(" ")}
-                      onClick={() => {
-                        handleShowPack();
-                        setCount(Math.max(count - 1, 0));
-                        selectedCartItem(props.id)[0].quantity === 1
-                          ? removeProduct(props)
-                          : decrease(props);
-                      }}
-                    >
-                      <RemoveIcon fontSize="small" />
-                    </Button>
-                  )}
-                  {isInCart(props) && (
-                    <Button
-                      aria-label="count"
-                      size="small"
-                      variant="outlined"
-                      style={{ visibility: show ? "hidden" : "visible" }}
-                      className={[
-                        classes.button,
-                        classes.borderlessButton,
-                      ].join(" ")}
-                    >
-                      {isInCart(props)
+                <IconButton
+                  color="primary"
+                  aria-label="increase"
+                  size="small"
+                  className={classes.button}
+                  onClick={() => {
+                    setCount(
+                      isInCart(props)
                         ? selectedCartItem(props.id)[0].quantity
-                        : 0}
-                    </Button>
-                  )}
-                  <Button
-                    aria-label="increase"
-                    size="small"
-                    variant="outlined"
-                    color="secondary"
-                    className={classes.button}
-                    onClick={() => {
-                      setCount(
-                        isInCart(props)
-                          ? selectedCartItem(props.id)[0].quantity
-                          : 0
-                      );
-                      handleOpenModal();
-                    }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </Button>
-                </ButtonGroup>
-                {show && (
-                  <Typography
-                    variant="body1"
-                    component="span"
-                    className={[classes.pack, "animate__fadeInLeft"].join(" ")}
-                  >
-                    {isInCart(props)
-                      ? selectedCartItem(props.id)[0].quantity
-                      : 0}
-                    {"\t"}
-                    package
-                  </Typography>
-                )}
+                        : 0
+                    );
+                    handleOpenModal();
+                  }}
+                >
+                  <Badge badgeContent={isInCart(props) ? selectedCartItem(props.id)[0].quantity : 0} max={2000} color="primary" >
+                    <LocalMallOutlinedIcon />
+                  </Badge>
+                </IconButton>
               </Grid>
             )}
           </Grid>
