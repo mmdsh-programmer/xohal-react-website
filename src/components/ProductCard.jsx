@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     border: "1px solid #b3b3b3",
-    borderRadius : 5
+    borderRadius: 5
   },
   borderlessButton: {
     border: "none",
@@ -126,10 +126,8 @@ export default function ProductCard(props) {
     cartItems,
     increaseAmount,
     addProduct,
-    decrease,
     removeProduct,
   } = React.useContext(CartContext);
-  const [show, setShow] = React.useState(false);
 
   const isInCart = (product) => {
     return !!cartItems.find((item) => item.id === product.id);
@@ -137,17 +135,6 @@ export default function ProductCard(props) {
 
   const selectedCartItem = (id) => {
     return cartItems.filter((e) => e.id === id);
-  };
-
-  const handleShowPack = () => {
-    const count = isInCart(props) ? selectedCartItem(props.id)[0].quantity : 0;
-    console.log(count);
-    if (count + 1 === 1) {
-      setShow(true);
-      setTimeout(() => {
-        setShow(false);
-      }, 1800);
-    }
   };
 
   const handleKeyPress = (e) => {
@@ -174,8 +161,9 @@ export default function ProductCard(props) {
   };
 
   const handleSubmit = () => {
-    if (count > 0) {
-      handleShowPack();
+    if (count <= 0 && isInCart(props)) {
+      removeProduct(props);
+    } else if (count > 0) {
       isInCart(props)
         ? increaseAmount({ ...props, count: count })
         : addProduct({ ...props, count: count });
