@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import product from "services/crud/products";
 import ProductCard from "components/ProductCard";
@@ -91,13 +92,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Categories(props) {
   const classes = useStyles();
   const { filter } = React.useContext(FilterContext);
+  const history = useHistory();
   const {
     initialProducts,
     filtering,
     allProducts,
     filteredProducts,
   } = React.useContext(ProductContext);
-  const [products, setProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [showMoreLoading, setShowMoreLoading] = React.useState(true);
   const [offset, setOffset] = React.useState(16);
@@ -141,6 +142,9 @@ export default function Categories(props) {
         return categoryDescription.box;
       case "تذهیب":
         return categoryDescription.tazhib;
+      default:
+        history.push("/404");
+        return { description: null, pieces: null }
     }
   };
 
@@ -376,7 +380,7 @@ export default function Categories(props) {
           <Grid
             item
             xs={12}
-            sm={typeof checkSlug().description !== "undefined" ? 6 : 12}
+            sm={checkSlug().description !== null ? 6 : 12}
           >
             <Typography variant="h5" component="h1" className={classes.title}>
               {slug}
