@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     position: "sticky",
     top: "0",
-    zIndex: 1,
+    zIndex: 2,
     paddingLeft: 10,
     paddingRight: 10,
   },
