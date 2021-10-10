@@ -1,7 +1,6 @@
 import React from "react";
 import {
   makeStyles,
-  withStyles,
   createMuiTheme,
 } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -142,7 +141,7 @@ export default function ProductCard(props) {
   const handleShowPack = () => {
     const count = isInCart(props) ? selectedCartItem(props.id)[0].quantity : 0;
     console.log(count);
-    if (count + 1 == 1) {
+    if (count + 1 === 1) {
       setShow(true);
       setTimeout(() => {
         setShow(false);
