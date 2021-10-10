@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { faIR } from "@material-ui/core/locale";
-import Shabnam from "fonts/Shabnam.ttf";
 import Main from "pages/Main";
 import Signin from "pages/Signin";
 import Signup from "pages/Signup";
@@ -22,12 +21,6 @@ import Checkout from "pages/Checkout";
 import SizeGuide from "pages/SizeGuide";
 import Header from "./Header";
 import BackToTop from "./BackToTop";
-
-const shabnam = {
-  fontFamily: "Shabnam",
-  fontStyle: "normal",
-  src: `url(${Shabnam}) format('ttf')`,
-};
 
 const theme = createMuiTheme(
   {

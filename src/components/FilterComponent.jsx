@@ -194,7 +194,6 @@ const MenuProps = {
 export default function FilterComponent(props) {
   const classes = useStyles();
   const [openMobileFilter, setOpenMobileFilter] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const { setFilter, filter } = React.useContext(FilterContext);
   const defaultFilterText = "همه";
   const [material, setMaterial] = React.useState(
@@ -227,16 +226,14 @@ export default function FilterComponent(props) {
     },
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-  let materials = material;
-
   const checkSlug = () => {
     switch (slug) {
       case "باکس":
         return filterOptions.box;
       case "تذهیب":
         return filterOptions.tazhib;
+      default:
+        return null
     }
   };
 
