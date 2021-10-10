@@ -150,6 +150,13 @@ export default function ProductCard(props) {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleCloseModal();
+      handleSubmit();
+    }
+  }
+
   const handleQuantityChange = (e) => {
     const { value } = e.target;
     const isNumber = /^[0-9\b]+$/;
@@ -182,6 +189,7 @@ export default function ProductCard(props) {
         onClose={handleCloseModal}
         aria-labelledby="form-dialog-title"
         scroll="body"
+        onKeyPress={handleKeyPress}
       >
         <DialogTitle id="form-dialog-title">{props.title}</DialogTitle>
         <DialogContent>
@@ -311,7 +319,7 @@ export default function ProductCard(props) {
                     component="h4"
                     className={classes.showPieces}
                   >
-                    Package: {props.pieces} pcs
+                    {props.pieces} in 1
                   </Typography>
                   <Typography
                     variant="body1"
@@ -319,7 +327,7 @@ export default function ProductCard(props) {
                     align="right"
                     className={classes.code}
                   >
-                    X Code: {props.sku}
+                    Code: {props.sku}
                   </Typography>
                 </React.Fragment>
               )}
