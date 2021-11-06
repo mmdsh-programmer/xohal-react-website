@@ -132,7 +132,7 @@ export default function Categories(props) {
     },
     tazhib: {
       description: null,
-      pieces: "100 paper in 1",
+      pieces: "100 papers in 1",
     },
   };
 
