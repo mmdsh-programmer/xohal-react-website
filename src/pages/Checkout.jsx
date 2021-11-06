@@ -519,7 +519,7 @@ export default function Checkout() {
         )}
         {cartItems.length === 0 && (
           <Typography component="h1" variant="h4" align="center">
-            سبد شفارشات شما خالی است. لطفا ابتدا سبد سفارشات خود را تکمیل نمایید
+            سبد سفارشات شما خالی است. لطفا ابتدا سبد سفارشات خود را تکمیل نمایید
           </Typography>
         )}
 

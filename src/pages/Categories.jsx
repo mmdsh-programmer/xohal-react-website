@@ -128,11 +128,11 @@ export default function Categories(props) {
     box: {
       description:
         "این محصول انحصاری برند زحل با تکنولوژی مدرن و طراحی ویژه در اندازه های مختلف تولید می‌شود. متال باکس ها با کاربری چندگانه و تکنیک های چاپی ویژه همچون متالایز، در بازار بی‌رقیب بوده وبرای همه‌ی سلایق ارائه می‌گردد.",
-      pieces: 5,
+      pieces: "5 in 1",
     },
     tazhib: {
       description: null,
-      pieces: 4,
+      pieces: "100 paper in 1",
     },
   };
 
@@ -144,7 +144,7 @@ export default function Categories(props) {
         return categoryDescription.tazhib;
       default:
         history.push("/404");
-        return { description: null, pieces: null }
+        return { description: null, pieces: null };
     }
   };
 
@@ -197,6 +197,20 @@ export default function Categories(props) {
 
   const getSkuMaterial = (sku) => {
     return Number(sku.substr(3, 2));
+  };
+
+  const getPieces = (attrs) => {
+    let pieces = [];
+    if (attrs.length > 0) {
+      pieces = attrs.find((attr) => attr.name === "package");
+      if (pieces.length !== 0) {
+        return pieces.options[0];
+      } else {
+        return undefined;
+      }
+    } else {
+      return checkSlug().pieces;
+    }
   };
 
   const hasMaterial = (product, materials) => {
@@ -343,7 +357,7 @@ export default function Categories(props) {
                       sku={pr.sku}
                       stock={pr.stock_quantity}
                       new={isNew(pr.date_created)}
-                      pieces={checkSlug().pieces}
+                      pieces={getPieces(pr.attributes)}
                     />
                   </Grid>
                 );
@@ -377,11 +391,7 @@ export default function Categories(props) {
           alignItems="center"
           justify="center"
         >
-          <Grid
-            item
-            xs={12}
-            sm={checkSlug().description !== null ? 6 : 12}
-          >
+          <Grid item xs={12} sm={checkSlug().description !== null ? 6 : 12}>
             <Typography variant="h5" component="h1" className={classes.title}>
               {slug}
             </Typography>

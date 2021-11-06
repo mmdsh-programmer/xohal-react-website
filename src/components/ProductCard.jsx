@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  makeStyles,
-  createMuiTheme,
-} from "@material-ui/core/styles";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
+import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import Grid from "@material-ui/core/Grid";
 import { CartContext } from "helpers/CartContext";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -21,8 +18,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
+import Badge from "@material-ui/core/Badge";
+import IconButton from "@material-ui/core/IconButton";
 
 const specialBreakpoint = createMuiTheme({
   breakpoints: {
@@ -44,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     border: "1px solid #b3b3b3",
-    borderRadius: 5
+    borderRadius: 5,
   },
   borderlessButton: {
     border: "none",
@@ -142,7 +139,7 @@ export default function ProductCard(props) {
       handleCloseModal();
       handleSubmit();
     }
-  }
+  };
 
   const handleQuantityChange = (e) => {
     const { value } = e.target;
@@ -170,6 +167,10 @@ export default function ProductCard(props) {
     }
   };
 
+  React.useEffect(() => {
+    console.log(props);
+  }, []);
+
   return (
     <>
       <Dialog
@@ -193,7 +194,7 @@ export default function ProductCard(props) {
             align="right"
             className={classes.showPieces}
           >
-            Package: {props.pieces} pcs
+            Package: pcs
           </Typography>
           <Typography
             variant="body1"
@@ -307,7 +308,7 @@ export default function ProductCard(props) {
                     component="h4"
                     className={classes.showPieces}
                   >
-                    Package : {props.pieces} in 1
+                    Package : {props.pieces}
                   </Typography>
                   <Typography
                     variant="body1"
@@ -336,7 +337,15 @@ export default function ProductCard(props) {
                     handleOpenModal();
                   }}
                 >
-                  <Badge badgeContent={isInCart(props) ? selectedCartItem(props.id)[0].quantity : 0} max={2000} color="primary" >
+                  <Badge
+                    badgeContent={
+                      isInCart(props)
+                        ? selectedCartItem(props.id)[0].quantity
+                        : 0
+                    }
+                    max={2000}
+                    color="primary"
+                  >
                     <LocalMallOutlinedIcon />
                   </Badge>
                 </IconButton>
