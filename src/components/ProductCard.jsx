@@ -167,10 +167,6 @@ export default function ProductCard(props) {
     }
   };
 
-  React.useEffect(() => {
-    console.log(props);
-  }, []);
-
   return (
     <>
       <Dialog
